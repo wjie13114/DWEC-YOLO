@@ -1,32 +1,28 @@
-# [Paper Title]
+# DWEC-YOLO: A Multi-Behavior Detection Model for Group-Housed Pigs
 
-[English] This repository contains the official implementation of **"[Paper Title]"**.
+This repository contains the official implementation of **"DWEC-YOLO: A Multi-Behavior Detection Model for Group-Housed Pigs"**.
 
-[中文] 本仓库是论文 **《[论文标题]》** 的官方实现代码。
+> 本仓库是论文《DWEC-YOLO：一种群养猪多行为检测模型》的官方实现代码。
 
-<!-- 建议补充：
-- 论文链接 / arXiv / DOI
-- 作者姓名与单位
--->
+<!-- TODO: 补充论文链接 / arXiv / DOI、作者姓名与单位 -->
 
 ## Overview
 
-This work addresses **[pig/animal] agonistic behavior (fighting) detection under occlusion**, built on [Ultralytics YOLO11](https://github.com/ultralytics/ultralytics). We propose three lightweight modules to improve spatial-interaction modeling and occlusion robustness:
+**DWEC-YOLO** is a YOLO11-based model for detecting multiple pig behaviors (aggression, standing, lying, ear-biting, feeding, etc.) under real group-housing conditions, with emphasis on **occlusion robustness**. It introduces three lightweight modules:
 
 | Module | Type | Description |
 | --- | --- | --- |
-| **DySnakeConv** | Convolution | Dynamic snake convolution, adapts the kernel to the target's morphology. |
+| **DySnakeConv** | Convolution | Dynamic snake convolution that adapts the kernel to the target's morphology, improving spatial-interaction modeling. |
 | **EUCB-SC** | Upsampling | Channel-shuffle enhanced upsampling block that mixes directional features after upsampling. |
 | **CoordAtt** | Attention | Coordinate attention that encodes row/column importance to focus on the interaction region. |
 
-The final model combines all three (`yolo11-dysnake-EUCB-SC-CoordAtt.yaml`).
+The full model combines all three modules (`yolo11-dysnake-EUCB-SC-CoordAtt.yaml`).
 
 ## Repository Structure
 
 ```
 ├── train.py                      # Training entry point
 ├── val.py                        # Validation + metrics (params/FLOPs/FPS/mAP)
-├── occlusion_final_evaluation.py # Occlusion-robustness evaluation (occluded vs. unoccluded)
 ├── ultralytics/
 │   ├── cfg/models/11puls/        # Paper's model configs (ablation variants)
 │   ├── cfg/models/11/yolo11.yaml # Baseline YOLO11 config
@@ -46,9 +42,7 @@ pip install -r requirements.txt   # or install per pyproject.toml
 
 ## Dataset
 
-<!-- 请补充数据集的获取方式 / 链接 / 目录结构说明 -->
-
-The dataset should be organized in the YOLO format and referenced by a `data.yaml`:
+The dataset is organized in the YOLO format and referenced by a `data.yaml`:
 
 ```yaml
 path: /path/to/dataset
@@ -63,6 +57,8 @@ names:
   4: Feeding
   # ... (7 classes in total)
 ```
+
+<!-- TODO: 补充数据集的获取方式 / 链接 -->
 
 ## Usage
 
@@ -82,30 +78,22 @@ Edit `model_path` and `data` in `val.py`, then:
 python val.py
 ```
 
-### Occlusion-robustness evaluation
-
-Prepare an `occlusion_annotation.xlsx` (columns: `image, bbox_id, class_id, x_center, y_center, width, height, occlusion`), then edit the paths in `occlusion_final_evaluation.py` and run:
-
-```bash
-python occlusion_final_evaluation.py
-```
-
 ## Results
 
-<!-- 请补充论文中的定量结果表格（mAP50 / mAP50-95 / Params / GFLOPs / FPS 等） -->
+<!-- TODO: 补充论文中的定量结果表格（mAP50 / mAP50-95 / Params / GFLOPs / FPS 等） -->
 
 | Model | mAP50 | mAP50-95 | Params | GFLOPs |
 | --- | --- | --- | --- | --- |
 | YOLO11 (baseline) | — | — | — | — |
-| **Ours (DySnakeConv+EUCB-SC+CoordAtt)** | — | — | — | — |
+| **DWEC-YOLO (ours)** | — | — | — | — |
 
 ## Citation
 
 If this work is useful to your research, please cite:
 
 ```bibtex
-@article{yourkey2026,
-  title   = {[Paper Title]},
+@article{dwecyolo2026,
+  title   = {DWEC-YOLO: A Multi-Behavior Detection Model for Group-Housed Pigs},
   author  = {[Authors]},
   journal = {[Journal / Conference]},
   year    = {2026},
